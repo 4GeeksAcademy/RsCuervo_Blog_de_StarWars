@@ -5,8 +5,8 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 const Navbar = () => {
   const { store, dispatch } = useGlobalReducer();
 
-  const removeFavorite = (uid) => {
-    dispatch({ type: "remove_from_favorites", payload: { uid } }); 
+  const removeFavorite = (uid, type) => {
+    dispatch({ type: "remove_from_favorites", payload: { uid, type } });
   };
   console.log("Favoritos actuales:", store.favorites);
 
@@ -27,12 +27,12 @@ const Navbar = () => {
         </button>
         <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="favoritesDropdown">
           {store.favorites.length > 0 ? (
-            store.favorites.map((fav, index) => (
-              <li key={index} className="d-flex justify-content-between align-items-center px-3">
+            store.favorites.map((fav) => (
+              <li key={fav.uid} className="d-flex justify-content-between align-items-center px-3">
                 <span>{fav.name}</span>
                 <button
                   className="btn btn-sm btn-outline-danger"
-                  onClick={() => removeFavorite(fav.uid)}
+                  onClick={() => removeFavorite( fav.uid, fav.type )}
                 >
                   <i className="fa fa-trash"></i>
                 </button>

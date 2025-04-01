@@ -15,12 +15,12 @@ const StarShips = () => {
       })
       .catch((error) => console.error("Error al obtener naves:", error));
   }, []);
-  const handleToggleFavorite = (starship) => {
-    const isFavorite = store.favorites.some((fav) => fav.uid === starship.uid && fav.type === "starship");
+  const toggleFavorite = (starship, type) => {
+    const isFavorite = store.favorites.some((fav) => fav.uid === starship.uid && fav.type === type)
     if (isFavorite) {
-      dispatch({ type: "remove_from_favorites", payload: { uid: starship.uid, type: "starship" } });
+      dispatch({ type: "remove_from_favorites", payload: {uid: starship.uid, type}});
     } else {
-      dispatch({ type: "add_to_favorites", payload: { ...starship, type: "starship" } });
+      dispatch({ type: "add_to_favorites", payload: {...starship, type }});
     }
   };
 
@@ -51,7 +51,7 @@ const StarShips = () => {
                       ? "btn-danger"
                       : "btn-outline-warning"
                       }`}
-                    onClick={() => handleToggleFavorite(starship, "starship")}
+                    onClick={() => toggleFavorite(starship, "starships")}
                   >
                     <i className={`fa-heart ${store.favorites.some((fav) => fav.uid === starship.uid && fav.type === "starships")
                         ? "fa-solid"
